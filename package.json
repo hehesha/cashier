@@ -1,0 +1,14 @@
+{
+  "name": "cashier",
+  "version": "1.0.0",
+  "description": "vue+vuex+webpack+elementUI",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lele",
+  "license": "ISC"
+}

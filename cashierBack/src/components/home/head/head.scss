@@ -1,0 +1,20 @@
+.ls-header{
+    background:skyblue;
+    position:relative;
+    left:0;
+    height:60px;
+    border-bottom:1px solid #ccc;
+    h2{
+        width:60%;
+        // background:#ccc;
+        float:left;
+        font-size:30px;
+        margin:20px 50px 0;
+        font-weight:900;
+    }
+    span{
+        // float:right;
+        display:inline-block;
+        margin:35px 100px 0;
+    }
+}
