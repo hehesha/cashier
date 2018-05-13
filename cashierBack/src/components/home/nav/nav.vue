@@ -15,10 +15,10 @@
                 <span>商品管理</span>
               </template>
               <el-menu-item-group>
-                <template slot="title">添加商品</template>
+                <template slot="title"><router-link to="/home/addgoods">添加商品</router-link></template>
               </el-menu-item-group>
               <el-menu-item-group>
-                <template slot="title">分组二</template>
+                <template slot="title"><router-link to="/home/goods">商品预览</router-link></template>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>      
@@ -35,13 +35,13 @@
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>权限管理</span>
+                <span>用户管理</span>
               </template>
               <el-menu-item-group>
-                <template slot="title">分组一</template>
+                <template slot="title">客户信息管理</template>
               </el-menu-item-group>
               <el-menu-item-group>
-                <template slot="title">分组二</template>
+                <template slot="title">员工信息管理</template>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>      

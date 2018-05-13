@@ -1,0 +1,49 @@
+.ls-sell{ 
+    background:#efefef;
+    // position:fixed;
+    // top:0;
+    // bottom:0;
+    // left:0;
+    // right:0;
+    display:flex;
+    flex-direction:column;
+    .s-header{
+        background:pink;
+        padding:10px 20px;
+        h1{
+            width:60%;
+            float:left;
+        }
+    }
+}
+.s-content{
+    flex:1;
+    background:#333;
+    table{
+        width:100%;
+        thead{
+            background:#aaa;
+            th{
+                border:2px solid #ddd;
+            }
+        }
+    }
+}
+.s-table{
+    width:100%;
+    height:500px;
+    border:1px solid #000;
+
+}
+
+.s-footer{
+    height:80px;
+    display:flex;
+    .f-left{
+        flex:1;
+        border-right:3px solid #000;
+    }
+    .f-right{
+        flex:1;
+    }
+}

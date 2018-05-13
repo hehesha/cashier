@@ -44,15 +44,15 @@ const HttpClient = {
                 // $('.dk-spinner.dk-spinner-three-bounce, dk-spinner-mask').parent('div').hide()
                 if (err) {
                     console.log(111);
-                    errorHandler(err)
-                    reject(err);
+                    // errorHandler(err)
+                    // reject(err);
                 } else {
                     resolve(res.body);
                 }
             });
     }),
 
-    post: (path, formdata, query) => new Promise((resolve, reject) => {
+    post: (path,query) => new Promise((resolve, reject) => {
         if(path.indexOf('login/index') < 0 && !window.localStorage.getItem('access_token')){
             router.push({name: 'login'});
             return false;            
@@ -61,9 +61,9 @@ const HttpClient = {
         axios
             .post(getUrl(path))
             .set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-            .set('Authorization',  window.localStorage.getItem('access_token'))
+            // .set('Authorization',  window.localStorage.getItem('access_token'))
             .query(query)
-            .send(formdata)
+            .send(query)
             .end((err, res) => {
                 // $('.dk-spinner.dk-spinner-three-bounce, dk-spinner-mask').parent('div').hide()
                 if (err) {
@@ -73,7 +73,7 @@ const HttpClient = {
                     if(path.indexOf('login/index') > -1){
                         window.localStorage.setItem('access_token', res.body.token_type + ' ' + res.body.access_token)
                     }
-                    resolve(res.body);
+                    resolve(res);
                 }
             });
     }),

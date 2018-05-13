@@ -1,0 +1,23 @@
+.ls-table{
+    width:100%;
+    // height:400px;
+    overflow:scoll;
+    border:2px solid #ddd;
+    thead{
+        background:orange;
+    }
+    tbody{
+        text-align:center;
+        tr{
+            height:30px;
+            border-bottom:1px solid #ccc;
+        }
+    }
+}
+
+.ls-pagination{
+    position:absolute;
+    bottom:20px;
+    left:30px;
+    border:1px solid #ccc;
+}
