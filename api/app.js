@@ -61,6 +61,15 @@ app.get('/getgoods', function(req, res) {
     require('./router/goods').getgoods(req,res,connection);
     
 })
+// 获取商品信息
+app.get('/getdetails', function(req, res) {
+    //然后请求的很快的时候才能正常关闭链接、
+    var connection = createConnection();
+    connection.connect();
+    //引入查找模块
+    require('./router/goods').getdetails(req,res,connection);
+    
+})
 //要post请求...............................................................................
 // parse application/x-www-form-urlencoded 
 //使用bodyParser模块
