@@ -5,6 +5,7 @@ import homeCompont from '../components/home/home.vue'
 import GoodsComponent from '../components/goods/goods.vue'
 import AddGoods from '../components/addgoods/addgoods.vue'
 import SellComponent from '../components/sell/sell.vue'
+import LoginComponent from '../components/login/login.vue'
 
 Vue.use(Router)
 
@@ -34,6 +35,10 @@ export default new Router({
         path:'/sell',
         name:'sell',
         component:SellComponent
+    },
+    {
+        path:'/login',
+        component:LoginComponent
     }
   ]
 })

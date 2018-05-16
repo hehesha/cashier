@@ -10,6 +10,7 @@
             <thead>
                 <tr>
                     <th>序号</th>
+                    <th>商品条码</th>
                     <th>商品名称</th>
                     <th>单价</th>
                     <th>数量</th>
@@ -40,7 +41,8 @@
         <div class="f-right fr">
           <div>商品总数：<span>{{dataset.length}}</span></div>
           <div>总金额：<span>{{total}}</span></div> 
-            
+          <el-button type="text" @click="open(total)">结算</el-button>
+
         </div>
       </div>
     </div>
@@ -48,6 +50,7 @@
 
 <script type="text/javascript">
 import './sell.scss'
+import http from '../../utils/HttpService'
 export default {
   data () {
     return {
@@ -63,9 +66,17 @@ export default {
           console.log(e.target.value);
           // 发起请求
          this.num1=1;
-         var res={"name":"写字笔","price":"59","num":"1","unit":"支","descount":"1"};
-         this.dataset.push(res);
-         this.currentL=this.dataset.length-1;
+         
+         http.get('getdetails',{proid:e.target.value}).then((res)=>{
+             var cres=res.body[0];
+             console.log(cres.name);
+             var names=cres.name;
+             var newres={"proNo":e.target.value,"name":names,"price":cres['price'],"num":1,"unit":cres.unit,"descount":"1"};
+             console.log(newres);
+             this.dataset.push(newres);
+            this.currentL=this.dataset.length-1;
+            this.total=this.getTotals(this.dataset);
+         })
          e.target.value="";
 
       },
@@ -74,7 +85,31 @@ export default {
         this.dataset[this.currentL].num=this.num1;
       },
       getTotals(arr){
-        
+        this.total=this.getTotals(this.dataset);
+      },
+      getTotals(arr){
+        var sum = 0;
+        console.log(JSON.parse(JSON.stringify(arr)));
+        for(var i=0;i<arr.length;i++){
+            sum+=arr[i].price*arr[i].num;
+        }
+        console.log(sum);
+        return sum;
+      },
+      open(total) {
+      this.$alert(`总金额：${total}`, '结算', {
+          confirmButtonText: '已支付',
+          callback: action => {
+            console.log(`${action}`);
+            if(action==='confirm'){
+                //生成订单
+                console.log(this.dataset);
+                JSON.parse(JSON.stringify(this.dataset));
+                // 重置
+                // this.dataset=[];
+            }
+          }
+        });
       }
      
   }
