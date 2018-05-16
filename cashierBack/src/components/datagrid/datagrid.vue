@@ -5,15 +5,22 @@
                 <thead>
                     <tr>
                         <th v-for="(key,value) in datasource[0][0]" v-if="(!columns[0] || columns.indexOf(value) > -1) && filterColumns.indexOf(value) < 0">{{value}}</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in datasource[0]">
+                    <tr v-for="(item, index) in datasource[0]" >
                     <td v-for="(value, key) in item" v-if="(!columns[0] || columns.indexOf(key) > -1) && filterColumns.indexOf(key) < 0">{{filterData(key, value)}}</td>
+                    <td>
+                        <i class="el-icon-edit" style="color:#409EFF" @click="edit(item.productNo)"></i>
+                        <i class="el-icon-delete" style="color:#F56C6C"></i>
+
+                    </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
         <div class="block ls-pagination" @click="pagination($event)">
             <el-pagination
               :current-page.sync="currentPage"
@@ -22,6 +29,40 @@
               :total=totalPage>
             </el-pagination>
        </div>
+     
+       <el-dialog title="商品详情" :visible.sync="dialogFormVisible">
+          <el-form :model="form">
+            <el-form-item label="商品条码" :label-width="formLabelWidth">
+              <el-input v-model="form.productNo" auto-complete="off" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="商品名称" :label-width="formLabelWidth">
+              <el-input v-model="form.name" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="进货价格" :label-width="formLabelWidth">
+              <el-input v-model="form.price" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="备注信息" :label-width="formLabelWidth">
+              <el-input v-model="form.remarks" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="单位" :label-width="formLabelWidth">
+              <el-input v-model="form.unit" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="商品数量" :label-width="formLabelWidth">
+              <el-input v-model="form.num" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="尺寸" :label-width="formLabelWidth">
+              <el-input v-model="form.size" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="售价" :label-width="formLabelWidth">
+              <el-input v-model="form.sellprice" auto-complete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="savechange">保 存</el-button>
+          </div>
+        </el-dialog>
+
     </div>
 
 </template>
@@ -52,7 +93,18 @@
                 pageSize:5,
                 paginationConfig:null,
                 currentPage:1,
-                loading:false
+                loading:false,
+                form: {
+                      name: '',
+                      price: '',
+                      productNo: '',
+                      remarks: '',
+                      unit:'',
+                      num:'',
+                      size: '',
+                      sellprice: ''
+                    },
+                dialogFormVisible: false
             }
         },
         methods: {
@@ -115,6 +167,36 @@
                     console.log(self.currentPage);
                     self.apiRequest(self.currentPage);
                 },30);
+            },
+            edit(_index){
+                console.log(_index);
+                http.get('getdetails',{proid:_index}).then((res)=>{
+                    console.log(res.body[0]);
+                    var fres=res.body[0];
+                    this.form.name=fres.name;
+                    this.form.price=fres.price;
+                    this.form.productNo=fres.productNo;
+                    this.form.remarks=fres.remerks;
+                    this.form.unit=fres.unit;
+                    this.form.num=fres.num;
+                    this.form.size=fres.size;
+                    this.form.sellprice=fres.sellprice;
+                })
+                this.dialogFormVisible = true;
+
+            },
+            //保留更改信息
+            savechange(){
+                console.log(this.form);
+                http.post('updategoods',this.form).then(res=>{
+                    console.log(res);
+                    if(res.ok){
+                        alert('success');
+                        this.dialogFormVisible = false;
+                        //重新请求数据
+                        this.apiRequest();
+                    }
+                })
             }
 
             
