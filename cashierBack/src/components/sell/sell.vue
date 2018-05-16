@@ -39,7 +39,7 @@
         <span>数量</span><el-input-number v-model="num1" :step="1" @change="changeNumber"></el-input-number>
         </div>
         <div class="f-right fr">
-          <div>商品总数：<span>{{dataset.length}}</span></div>
+          <div>商品记录数：<span>{{dataset.length}}</span></div>
           <div>总金额：<span>{{total}}</span></div> 
           <el-button type="text" @click="open(total)">结算</el-button>
 
@@ -71,7 +71,7 @@ export default {
              var cres=res.body[0];
              console.log(cres.name);
              var names=cres.name;
-             var newres={"proNo":e.target.value,"name":names,"price":cres['price'],"num":1,"unit":cres.unit,"descount":"1"};
+             var newres={"proNo":cres['productNo'],"name":names,"price":cres['sellprice'],"num":1,"unit":cres.unit,"descount":"1"};
              console.log(newres);
              this.dataset.push(newres);
             this.currentL=this.dataset.length-1;
@@ -83,10 +83,9 @@ export default {
       changeNumber(){
         console.log(this.num1);
         this.dataset[this.currentL].num=this.num1;
-      },
-      getTotals(arr){
         this.total=this.getTotals(this.dataset);
       },
+      
       getTotals(arr){
         var sum = 0;
         console.log(JSON.parse(JSON.stringify(arr)));
