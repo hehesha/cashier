@@ -2,7 +2,7 @@
     <div class="ls-sell">
       <div class="s-header">
         <h1>超市收银系统</h1>
-        <span><b>操作员：</b></span>
+        <span><b>操作员：lele</b></span>
       </div>
       <div class="s-content">
         <div class="s-table">

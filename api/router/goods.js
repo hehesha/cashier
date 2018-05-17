@@ -39,7 +39,7 @@ exports.getgoods = function(req, res, connection) {
         connection.end();
     });
 }
-// 获取商品想起
+// 获取商品详情
 exports.getdetails = function(req, res, connection) {
     console.log(req.query);
     var proNo = req.query.proid;

@@ -5,12 +5,18 @@
                 <thead>
                     <tr>
                         <th v-for="(key,value) in datasource[0][0]" v-if="(!columns[0] || columns.indexOf(value) > -1) && filterColumns.indexOf(value) < 0">{{value}}</th>
+                        <th>编辑</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(item, index) in datasource[0]">
                     <td v-for="(value, key) in item" v-if="(!columns[0] || columns.indexOf(key) > -1) && filterColumns.indexOf(key) < 0">{{filterData(key, value)}}</td>
+                    <td>
+                        <i class="el-icon-edit"></i>
+                        <i class="el-icon-delete"></i>
+                    </td>
                     </tr>
+
                 </tbody>
             </table>
         </div>
