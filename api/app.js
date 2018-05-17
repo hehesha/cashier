@@ -61,13 +61,22 @@ app.get('/getgoods', function(req, res) {
     require('./router/goods').getgoods(req,res,connection);
     
 })
-// 获取商品信息
+// 获取商品详情
 app.get('/getdetails', function(req, res) {
     //然后请求的很快的时候才能正常关闭链接、
     var connection = createConnection();
     connection.connect();
     //引入查找模块
     require('./router/goods').getdetails(req,res,connection);
+    
+})
+// 获取员工信息
+app.get('/getemployee', function(req, res) {
+    //然后请求的很快的时候才能正常关闭链接、
+    var connection = createConnection();
+    connection.connect();
+    //引入查找模块
+    require('./router/employee').getemployee(req,res,connection);
     
 })
 //要post请求...............................................................................
@@ -92,6 +101,21 @@ app.post('/addgoods', function(req, res) {
     connection.connect();
     //引入查找模块
     require('./router/goods').addgoods(req,res,connection);
+})
+app.post('/updategoods', function(req, res) {
+    //然后请求的很快的时候才能正常关闭链接、
+    var connection = createConnection();
+    connection.connect();
+    //引入查找模块
+    require('./router/goods').updategoods(req,res,connection);
+})
+// 生成订单
+app.post('/createorders', function(req, res) {
+    //然后请求的很快的时候才能正常关闭链接、
+    var connection = createConnection();
+    connection.connect();
+    //引入查找模块
+    require('./router/orders').createorders(req,res,connection);
 })
 
 //监听该端口..............................................................................

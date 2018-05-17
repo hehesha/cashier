@@ -6,6 +6,7 @@ import GoodsComponent from '../components/goods/goods.vue'
 import AddGoods from '../components/addgoods/addgoods.vue'
 import SellComponent from '../components/sell/sell.vue'
 import LoginComponent from '../components/login/login.vue'
+import EmployeeComponent from '../components/employee/employee.vue'
 
 Vue.use(Router)
 
@@ -29,7 +30,12 @@ export default new Router({
             path:'addgoods',
             name:'addgoods',
             component:AddGoods
-        }]
+        },
+        {
+            path:'employee',
+            component:EmployeeComponent
+        }
+        ]
     },
     {
         path:'/sell',

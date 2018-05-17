@@ -38,10 +38,7 @@
                 <span>用户管理</span>
               </template>
               <el-menu-item-group>
-                <template slot="title">客户信息管理</template>
-              </el-menu-item-group>
-              <el-menu-item-group>
-                <template slot="title">员工信息管理</template>
+                <template slot="title"><router-link to="/home/employee">员工信息管理</router-link></template>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>      

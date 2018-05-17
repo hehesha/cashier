@@ -9,6 +9,9 @@
   <el-form-item label="进货价格" prop="price">
     <el-input v-model="ruleForm.price"></el-input>
   </el-form-item>
+    <el-form-item label="销售价格" prop="sellprice">
+    <el-input v-model="ruleForm.sellprice"></el-input>
+  </el-form-item>
   <el-form-item label="商品数量" prop="num">
     <el-input v-model="ruleForm.num"></el-input>
   </el-form-item>
@@ -17,10 +20,7 @@
   </el-form-item>
   <el-form-item label="供应商" prop="provide">
     <el-input v-model="ruleForm.provide"></el-input>
-  </el-form-item>  
-  <el-form-item label="尺寸" prop="size">
-    <el-input v-model="ruleForm.size"></el-input>
-  </el-form-item>  
+  </el-form-item>   
     <el-form-item label="描述信息" prop="desc">
     <el-input type="textarea" v-model="ruleForm.desc"></el-input>
   </el-form-item>
@@ -43,7 +43,8 @@
           provide:'',
           unit: '',
           size: '',
-          desc: ''
+          desc: '',
+          sellprice:''
         },
         rules: {
           name: [
@@ -56,14 +57,14 @@
           price: [
             { required: true, message: '请输入商品价格', trigger: 'blur' }
           ],
+          sellprice: [
+            { required: true, message: '请输入商品价格', trigger: 'blur' }
+          ],
           num: [
             { required: true, message: '请输入商品数量', trigger: 'blur' }
           ],
           unit: [
             { trigger: 'blur' }
-          ],
-          size:[
-            {trigger:'blur'}
           ],
           desc: [
             {  trigger: 'blur' }
@@ -82,7 +83,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            http.post('addgoods',{proid:this.ruleForm.proid,num:this.ruleForm.num,name:this.ruleForm.name,price:this.ruleForm.price,unit:this.ruleForm.unit,size:this.ruleForm.size,desc:this.ruleForm.desc,prov:this.ruleForm.provide}).then((res)=>{
+            http.post('addgoods',{proid:this.ruleForm.proid,num:this.ruleForm.num,name:this.ruleForm.name,price:this.ruleForm.price,unit:this.ruleForm.unit,size:this.ruleForm.size,desc:this.ruleForm.desc,prov:this.ruleForm.provide,sell:this.ruleForm.sellprice}).then((res)=>{
                 console.log(res);
                 if(res.ok){
                   alert('success!');

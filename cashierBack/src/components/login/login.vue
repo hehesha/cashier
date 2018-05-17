@@ -30,6 +30,7 @@
 <script type="text/javascript">
 import './login.scss'
 import http from '../../utils/HttpService'
+import router from 'vue-router'
 
 export default {
  
@@ -66,7 +67,8 @@ export default {
 	            { validator: checkUser, trigger: 'blur' }
 	          ]
 	        }
-       } 
+       }
+
     },
      methods: {
       submitForm(formName) {
@@ -77,7 +79,24 @@ export default {
             // 发起请求
             console.log(JSON.parse(JSON.stringify(this.ruleForm2)));
             http.get('login',JSON.parse(JSON.stringify(this.ruleForm2))).then((res)=>{
-            	console.log(res);
+            	// console.log(res);
+              console.log(res.body,8888);
+              if(res.body.length>0){
+                  // 通过验证，将登陆信息存入session，跳转到对应的界面
+                  sessionStorage.setItem("user", this.ruleForm2.user);
+                   sessionStorage.setItem("Nickname", res.body[0].nickname);
+                   sessionStorage.setItem("rank", res.body[0].rank);
+                   if(this.ruleForm2.region=='cashier'){
+                        this.$router.push('sell')
+
+                   }else{
+                      this.$router.push('home')
+
+                   }
+
+              }else{
+                alert('用户名或密码错误！')
+              }
             })
           } else {
             console.log('error submit!!');
