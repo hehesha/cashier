@@ -1,6 +1,6 @@
 <template>
     <div id="ls-login">
-        <img src="./timg.gif" class="l-img"/>
+        <img src="./Login3.jpg" class="l-img"/>
         <div class="l_content">
         	<div class="l-form">       		
 	        	<h1>Login</h1>

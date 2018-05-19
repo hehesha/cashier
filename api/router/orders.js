@@ -39,6 +39,7 @@ exports.createorders = function(req, res, connection) {
         if(error) throw error;
         //results =>array类型
         console.log('The solution is: ', results);
+        results.push({'currenRow':currenRow});
         res.send(results);
         connection.end();
     });

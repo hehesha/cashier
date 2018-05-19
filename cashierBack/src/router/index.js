@@ -9,6 +9,7 @@ import LoginComponent from '../components/login/login.vue'
 import EmployeeComponent from '../components/employee/employee.vue'
 import StaticComponent from '../components/statistics/statistic.vue'
 import AddUserComponent from '../components/adduser/adduser.vue'
+import PrintComponent from '../components/print/print.vue'
 
 Vue.use(Router)
 
@@ -50,11 +51,16 @@ export default new Router({
     {
         path:'/sell',
         name:'sell',
-        component:SellComponent
+        component:SellComponent      
     },
     {
         path:'/login',
         component:LoginComponent
+    },
+    {
+        path:'/print',
+        name:'print',
+        component:PrintComponent
     }
   ]
 })

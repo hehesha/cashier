@@ -3,6 +3,8 @@
       <div class="s-header">
         <h1>超市收银系统</h1>
         <span><b>操作员：{{user}}</b></span>
+        <span>日期：{{date}}</span>
+        <button>转到后台</button>
       </div>
       <div class="s-content">
         <div class="s-table">
@@ -28,11 +30,12 @@
             </tbody>
           </table>
           </div>
+           
       </div>
       <div class="s-footer">
         <div class="f-left fl">
         <label>商品条码
-          <input type="text" @keyup.enter="getDetails($event)" />
+          <input type="text" @keyup.enter="getDetails($event)" id="proNo"/>
         </label></br>
         商品名：<span v-if="dataset.length>0">{{dataset[currentL].name}}</span></br>
         价格：<span v-if="dataset.length>0">{{dataset[currentL].price}}</span></br>
@@ -42,7 +45,6 @@
           <div>商品记录数：<span>{{dataset.length}}</span></div>
           <div>总金额：<span>{{total}}</span></div> 
           <el-button type="text" @click="open(total)">结算</el-button>
-
         </div>
       </div>
     </div>
@@ -51,6 +53,7 @@
 <script type="text/javascript">
 import './sell.scss'
 import http from '../../utils/HttpService'
+import router from 'vue-router'
 export default {
   data () {
     return {
@@ -59,7 +62,8 @@ export default {
         currentL:0,
         num1: 1,
         total:0,
-        user:''
+        user:'',
+        date:''
     }
   },
   methods:{
@@ -111,16 +115,49 @@ export default {
                   num:this.dataset.length,
                   total:this.total
                 };
-                console.log(param)
-                http.post('createorders',param).then(res=>{
-                  console.log(res)
-                })
+                console.log(param);
+                if(this.dataset.length>0){
+
+                  http.post('createorders',param).then(res=>{
+                    console.log(res)
+                    if(res.ok){
+                        //添加成功则生成打印小票界面
+                        //window.print();
+                        //获取当前生成的订单号
+                        console.log(res.body[2]);
+                        var orderId = res.body[2].currenRow;
+                        console.log(orderId);
+                        this.$router.push({
+                          name: 'print',
+                          params: {
+                            id:orderId
+                          }
+                        })
+                    }
+                  })
+                }
                 // 重置
-                 this.dataset=[];
+                 //this.dataset=[];
             }
           }
         });
-      }
+      },
+      getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    },
+     
      
   },
   beforeMount(){
@@ -128,7 +165,12 @@ export default {
       var nickname = sessionStorage.getItem("Nickname");
       console.log(username,nickname);
       this.user=nickname? nickname : username;
-  }
+      this.date=this.getNowFormatDate();
+      },
+      mounted(){
+      var proid=document.getElementById('proNo');
+        proid.focus();
+      }
 
 }
 </script>

@@ -1,28 +1,47 @@
 .ls-sell{ 
     background:#efefef;
-    // position:fixed;
-    // top:0;
-    // bottom:0;
-    // left:0;
-    // right:0;
+    position:fixed;
+    top:0;
+    bottom:10px;
+    left:0;
+    right:0;
     display:flex;
     flex-direction:column;
     .s-header{
-        background:pink;
+        background:#E6A23C;
         padding:10px 20px;
+        // height:80px;
         h1{
-            width:60%;
+            width:40%;
             float:left;
+            font-weight:900;
+            font-size:30px;
+        }
+        span{
+            margin:10px 50px;
+            padding-top:20px;
+            line-height: 50px;
+        }
+        button{
+            padding:10px 20px;
+            background:#F56C6C;
+            color:#fff;
+            font-weight:900;
+            border-radius:8px;
+            margin-left:60px;
         }
     }
 }
 .s-content{
     flex:1;
-    background:#666;
+    background:#E4E7ED;
+    overflow-x:hidden;
     table{
         width:100%;
         thead{
             background:#aaa;
+            position:relative;
+            top:0;
             th{
                 border:2px solid #ddd;
             }
@@ -39,11 +58,17 @@
 .s-footer{
     height:80px;
     display:flex;
+    border-top:3px solid #000;
+    background:#EBEEF5;
     .f-left{
         flex:1;
         border-right:3px solid #000;
     }
     .f-right{
         flex:1;
+    }
+    input:nth-child(1){
+        border:1px solid skyblue;
+        border-radius:3px;
     }
 }
