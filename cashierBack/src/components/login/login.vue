@@ -75,7 +75,7 @@ export default {
       	this.$refs[formName].validate((valid) => {
           if (valid) {
 
-            alert('submit!');
+            //alert('submit!');
             // 发起请求
             console.log(JSON.parse(JSON.stringify(this.ruleForm2)));
             http.get('login',JSON.parse(JSON.stringify(this.ruleForm2))).then((res)=>{

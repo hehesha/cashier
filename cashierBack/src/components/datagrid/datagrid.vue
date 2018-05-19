@@ -104,7 +104,8 @@
                       size: '',
                       sellprice: ''
                     },
-                dialogFormVisible: false
+                dialogFormVisible: false,
+                rank:1,
             }
         },
         methods: {
@@ -170,19 +171,24 @@
             },
             edit(_index){
                 console.log(_index);
-                http.get('getdetails',{proid:_index}).then((res)=>{
-                    console.log(res.body[0]);
-                    var fres=res.body[0];
-                    this.form.name=fres.name;
-                    this.form.price=fres.price;
-                    this.form.productNo=fres.productNo;
-                    this.form.remarks=fres.remerks;
-                    this.form.unit=fres.unit;
-                    this.form.num=fres.num;
-                    this.form.size=fres.size;
-                    this.form.sellprice=fres.sellprice;
-                })
-                this.dialogFormVisible = true;
+                if(this.rank>1){
+
+                    http.get('getdetails',{proid:_index}).then((res)=>{
+                        console.log(res.body[0]);
+                        var fres=res.body[0];
+                        this.form.name=fres.name;
+                        this.form.price=fres.price;
+                        this.form.productNo=fres.productNo;
+                        this.form.remarks=fres.remerks;
+                        this.form.unit=fres.unit;
+                        this.form.num=fres.num;
+                        this.form.size=fres.size;
+                        this.form.sellprice=fres.sellprice;
+                    })
+                    this.dialogFormVisible = true;
+                }else{
+                    alert('您没有操作权限！')
+                }
 
             },
             //保留更改信息
@@ -222,19 +228,8 @@
                     this.apiRequest();
                 });
             }
-            /*
-            if(this.api){
-                http.get(this.api)
-                .then(response => {
-                    //console.log(response);
-                    this.datasource=response.body;
-                    //console.log(this.datasource);
-                    if(typeof this.datasource.rows == 'string'){
-                        this.datasource.rows = JSON.parse(this.datasource.rows);
-                    }
-                })                
-            }
-            */
+            this.rank=sessionStorage.getItem("rank") || 1;
+            
         }
     }
 </script>

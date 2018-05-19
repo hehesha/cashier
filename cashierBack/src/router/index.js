@@ -7,6 +7,8 @@ import AddGoods from '../components/addgoods/addgoods.vue'
 import SellComponent from '../components/sell/sell.vue'
 import LoginComponent from '../components/login/login.vue'
 import EmployeeComponent from '../components/employee/employee.vue'
+import StaticComponent from '../components/statistics/statistic.vue'
+import AddUserComponent from '../components/adduser/adduser.vue'
 
 Vue.use(Router)
 
@@ -34,6 +36,14 @@ export default new Router({
         {
             path:'employee',
             component:EmployeeComponent
+        },
+        {
+            path:'sellstatic',
+            component:StaticComponent
+        },
+        {
+            path:'adduser',
+            component:AddUserComponent
         }
         ]
     },

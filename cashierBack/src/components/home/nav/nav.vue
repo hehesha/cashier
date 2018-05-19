@@ -40,9 +40,32 @@
               <el-menu-item-group>
                 <template slot="title"><router-link to="/home/employee">员工信息管理</router-link></template>
               </el-menu-item-group>
+              <el-menu-item-group>
+                <template slot="title"><router-link to="/home/adduser">添加新员工</router-link></template>
+              </el-menu-item-group>
             </el-submenu>
           </el-menu>      
       </el-row>
+            <el-row class="tac"> 
+              <el-menu
+                default-active="2"
+                class="el-menu-vertical-demo"
+                @open="handleOpen"
+                @close="handleClose"
+                background-color="#545c64"
+                text-color="#fff"
+                active-text-color="#ffd04b">
+                <el-submenu index="1">
+                  <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span>销售统计管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <template slot="title"><router-link to="/home/sellstatic">销售统计</router-link></template>
+                  </el-menu-item-group>
+                </el-submenu>
+              </el-menu>      
+          </el-row>
 
     </div>
 </template>

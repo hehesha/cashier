@@ -97,7 +97,7 @@ export default {
         return sum;
       },
       open(total) {
-      this.$alert(`总金额：${total}`, '结算', {
+      this.$alert(`总金额：${total}`, '支付方式', {
           confirmButtonText: '已支付',
           callback: action => {
             console.log(`${action}`);
@@ -106,15 +106,17 @@ export default {
                 console.log(this.dataset);
                 JSON.parse(JSON.stringify(this.dataset));
                 var param={
-                  data:this.dataset,
-                  operate:sessionStorage.getItem("user")
+                  data:JSON.stringify(this.dataset),
+                  operate:sessionStorage.getItem("user"),
+                  num:this.dataset.length,
+                  total:this.total
                 };
                 console.log(param)
                 http.post('createorders',param).then(res=>{
                   console.log(res)
                 })
                 // 重置
-                // this.dataset=[];
+                 this.dataset=[];
             }
           }
         });
@@ -122,7 +124,7 @@ export default {
      
   },
   beforeMount(){
-      var username = sessionStorage.getItem("user");
+      var username = sessionStorage.getItem("user") || '未登录';
       var nickname = sessionStorage.getItem("Nickname");
       console.log(username,nickname);
       this.user=nickname? nickname : username;
