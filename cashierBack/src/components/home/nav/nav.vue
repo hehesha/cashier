@@ -43,6 +43,9 @@
               <el-menu-item-group>
                 <template slot="title"><router-link to="/home/adduser">添加新员工</router-link></template>
               </el-menu-item-group>
+              <el-menu-item-group>
+                <template slot="title"><router-link to="/home/updateuser">修改个人信息</router-link></template>
+              </el-menu-item-group>
             </el-submenu>
           </el-menu>      
       </el-row>

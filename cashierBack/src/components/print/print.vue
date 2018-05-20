@@ -1,10 +1,10 @@
 <template>
     <div class="print">
-        <h2>打印小票</h2>
+        <h2>打印小票预览</h2>
         <div class="p_content">
             <div class="p_head">
                 <h3>XX超市销售单</h3>
-                <span>收款员：{{cashier}} NO:{{oid}}  </span>
+                <span>收款员:{{cashier}} NO:{{oid}}  </span>
             </div>
             <div class="p_title">
                 <span>商品名称</span>
@@ -15,12 +15,13 @@
                 
             </div>
             <ul class="o_sum">
-                <li>小计金额：<span>{{sum}}</span></li>
-                <li>实收金额：<span>{{sum}}</span></li>   
+                <li>小计金额:<span>{{sum}}</span></li>
+                <li>实收金额:<span>{{pay}}</span></li>
+                <li>找回:<span>{{pay-sum}}</span></li>   
             </ul>
             <div class="o_date">
-                <span>日期：{{datetime}}</span>
-                <span>时间：{{time}}</span>
+                <span>日期:{{datetime}}</span>
+                <span>时间:{{time}}</span>
             </div>
             <ul class="o_footer">
                 <li>为保障权益，请保留小票，多谢惠顾</li>
@@ -47,6 +48,7 @@ export default {
             this.sum = res.body[0].total;
             this.cashier = res.body[0].operator;
             this.orderhtml=res.body.map(item=>{
+            console.log(item);
             return `<ul><h3>${item['name']}</h3><li>${item['odid']}</li><li>${item['num']}</li><li>${item['num']*item['sellprice']}</li></ul>`
             }).join('');
 
@@ -60,7 +62,8 @@ export default {
             orderhtml:'',
             sum:'',
             datetime:'',
-            time:''
+            time:'',
+            pay:this.$route.params.pay
 
         }
     },

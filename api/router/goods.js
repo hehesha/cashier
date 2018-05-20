@@ -96,3 +96,44 @@ exports.updategoods = function(req, res, connection) {
         connection.end();
     });
 }
+
+// 搜索商品信息
+exports.searchgood = function(req, res, connection) {
+    console.log(req.query);
+    var datas = req.query.data;
+    var page = req.query.page;
+    var pageitems = req.query.pageitems;
+    var pageBegin = pageitems * (page - 1);
+    //查找......................
+   
+    connection.query(`select
+                SQL_CALC_FOUND_ROWS
+                 * from goods where productNo like '%${datas}%' or name like "%${datas}%"
+                 limit ${pageBegin},${pageitems};
+                 select count(*) as rowscount from goods where productNo like '%${datas}%' or name like "%${datas}%";
+                 `, function(error, results, fields) { 
+        if(error) throw error;
+        //results =>array类型
+        //console.log('The solution is: ', results);
+        res.send(results);
+        connection.end();
+    });
+}
+// 删除商品
+exports.deletegoods = function(req, res, connection) {
+    console.log(req.body);
+    var proNo = req.body.proNo;
+    var sql=`
+        delete from goods where productNo = '${proNo}'
+                 `;
+         console.log(sql);
+    //查找......................
+   
+    connection.query(sql, function(error, results, fields) { 
+        if(error) throw error;
+        //results =>array类型
+        //console.log('The solution is: ', results);
+        res.send(results);
+        connection.end();
+    });
+}

@@ -61,6 +61,15 @@ app.get('/getgoods', function(req, res) {
     require('./router/goods').getgoods(req,res,connection);
     
 })
+// 搜索商品信息
+app.get('/searchgood', function(req, res) {
+    //然后请求的很快的时候才能正常关闭链接、
+    var connection = createConnection();
+    connection.connect();
+    //引入查找模块
+    require('./router/goods').searchgood(req,res,connection);
+    
+})
 // 获取商品详情
 app.get('/getdetails', function(req, res) {
     //然后请求的很快的时候才能正常关闭链接、
@@ -77,6 +86,15 @@ app.get('/getemployee', function(req, res) {
     connection.connect();
     //引入查找模块
     require('./router/employee').getemployee(req,res,connection);
+    
+})
+// 获取员工详情
+app.get('/getempdetails', function(req, res) {
+    //然后请求的很快的时候才能正常关闭链接、
+    var connection = createConnection();
+    connection.connect();
+    //引入查找模块
+    require('./router/employee').getempdetails(req,res,connection);
     
 })
 // 获取订单信息
@@ -118,6 +136,23 @@ app.post('/updategoods', function(req, res) {
     //引入查找模块
     require('./router/goods').updategoods(req,res,connection);
 })
+// 删除商品
+app.post('/deletegoods', function(req, res) {
+    //然后请求的很快的时候才能正常关闭链接、
+    var connection = createConnection();
+    connection.connect();
+    //引入查找模块
+    require('./router/goods').deletegoods(req,res,connection);
+})
+// 删除员工
+app.post('/deleteuser', function(req, res) {
+    //然后请求的很快的时候才能正常关闭链接、
+    var connection = createConnection();
+    connection.connect();
+    //引入查找模块
+    require('./router/employee').deleteuser(req,res,connection);
+})
+
 // 生成订单
 app.post('/createorders', function(req, res) {
     //然后请求的很快的时候才能正常关闭链接、
@@ -126,6 +161,24 @@ app.post('/createorders', function(req, res) {
     //引入查找模块
     require('./router/orders').createorders(req,res,connection);
 })
+// 添加员工
+app.post('/addcashier', function(req, res) {
+    //然后请求的很快的时候才能正常关闭链接、
+    var connection = createConnection();
+    connection.connect();
+    //引入查找模块
+    require('./router/employee').addcashier(req,res,connection);
+})
+// 修改员工信息
+app.post('/updatecashier', function(req, res) {
+    //然后请求的很快的时候才能正常关闭链接、
+    var connection = createConnection();
+    connection.connect();
+    //引入查找模块
+    require('./router/employee').updatecashier(req,res,connection);
+})
+
+
 
 //监听该端口..............................................................................
 var server = app.listen(3000, function() {

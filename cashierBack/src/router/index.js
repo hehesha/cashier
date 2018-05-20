@@ -10,6 +10,7 @@ import EmployeeComponent from '../components/employee/employee.vue'
 import StaticComponent from '../components/statistics/statistic.vue'
 import AddUserComponent from '../components/adduser/adduser.vue'
 import PrintComponent from '../components/print/print.vue'
+import UpdateUser from '../components/updateuser/update.vue'
 
 Vue.use(Router)
 
@@ -45,6 +46,9 @@ export default new Router({
         {
             path:'adduser',
             component:AddUserComponent
+        },{
+            path:'updateuser',
+            component:UpdateUser
         }
         ]
     },

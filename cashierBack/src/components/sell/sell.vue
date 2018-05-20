@@ -2,9 +2,9 @@
     <div class="ls-sell">
       <div class="s-header">
         <h1>超市收银系统</h1>
-        <span><b>操作员：{{user}}</b></span>
-        <span>日期：{{date}}</span>
-        <button>转到后台</button>
+        <span><b>操作员:{{user}}</b></span>
+        <span>日期:{{date}}</span>
+        <button @click="$router.push('/home')">转到后台</button>
       </div>
       <div class="s-content">
         <div class="s-table">
@@ -37,13 +37,13 @@
         <label>商品条码
           <input type="text" @keyup.enter="getDetails($event)" id="proNo"/>
         </label></br>
-        商品名：<span v-if="dataset.length>0">{{dataset[currentL].name}}</span></br>
-        价格：<span v-if="dataset.length>0">{{dataset[currentL].price}}</span></br>
+        商品名:<span v-if="dataset.length>0">{{dataset[currentL].name}}</span></br>
+        价格:<span v-if="dataset.length>0">{{dataset[currentL].price}}</span></br>
         <span>数量</span><el-input-number v-model="num1" :step="1" @change="changeNumber"></el-input-number>
         </div>
         <div class="f-right fr">
-          <div>商品记录数：<span>{{dataset.length}}</span></div>
-          <div>总金额：<span>{{total}}</span></div> 
+          <div>商品记录数:<span>{{dataset.length}}</span></div>
+          <div>总金额:<span>{{total}} </span> 实收金额:<span><input type="text" v-model="paymoney"/></span></div> 
           <el-button type="text" @click="open(total)">结算</el-button>
         </div>
       </div>
@@ -63,7 +63,8 @@ export default {
         num1: 1,
         total:0,
         user:'',
-        date:''
+        date:'',
+        paymoney:''
     }
   },
   methods:{
@@ -130,7 +131,8 @@ export default {
                         this.$router.push({
                           name: 'print',
                           params: {
-                            id:orderId
+                            id:orderId,
+                            pay:this.paymoney
                           }
                         })
                     }

@@ -1,5 +1,23 @@
 <template>
-    <div>       
+    <div>   
+        <div class="le-search" v-if="searchConfig">
+           <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="200px" class="demo-ruleForm">
+              <el-form-item
+                label="根据商品名或条形码搜索"
+                prop="searchgood"
+                :rules="[
+                  { required: true, message: '不能为空'}
+                ]"
+              >
+                <el-input  v-model.number="numberValidateForm.searchgood" auto-complete="off"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="submitSearch('numberValidateForm')">提交</el-button>
+                <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+              </el-form-item>
+            </el-form>
+        </div> 
+
         <div class="datagrid-content">
             <table class="ls-table" v-if="datasource" v-loading="loading">
                 <thead>
@@ -13,7 +31,7 @@
                     <td v-for="(value, key) in item" v-if="(!columns[0] || columns.indexOf(key) > -1) && filterColumns.indexOf(key) < 0">{{filterData(key, value)}}</td>
                     <td>
                         <i class="el-icon-edit" style="color:#409EFF" @click="edit(item.productNo)"></i>
-                        <i class="el-icon-delete" style="color:#F56C6C"></i>
+                        <i class="el-icon-delete" style="color:#F56C6C" @click="deleteg(item.productNo)"></i>
                     </td>
                     </tr>
 
@@ -87,10 +105,13 @@
                 filterColumns:null,
                 privateDic:{},
                 multiple:false,
+                searchConfig:false,
+                searchapi:null,
                 filterDataConfig:{},
                 searchParams:{},
                 totalPage:60,
                 pageSize:5,
+                gapi:this.api,
                 paginationConfig:null,
                 currentPage:1,
                 loading:false,
@@ -106,6 +127,9 @@
                     },
                 dialogFormVisible: false,
                 rank:1,
+                numberValidateForm: {
+                                      searchgood: ''
+                                    }
             }
         },
         methods: {
@@ -145,7 +169,7 @@
                 }       
                 this.loading=true;
                 //配置信息中的 api
-                http.get(this.api, this.searchParams).then((apiRes) => {
+                http.get(this.gapi, this.searchParams).then((apiRes) => {
                     console.log(apiRes);
                     this.datasource=apiRes.body;
                     console.log(apiRes.body[1][0]['rowscount']);
@@ -191,6 +215,17 @@
                 }
 
             },
+            deleteg(_index){
+                console.log(_index);
+                if(this.rank>2){
+                http.post('deletegoods',{proNo:_index}).then(res=>{
+                    console.log(res);
+                    this.apiRequest();
+                })
+                }else{
+                    alert('您没有操作权限！')
+                }
+            },
             //保留更改信息
             savechange(){
                 console.log(this.form);
@@ -203,6 +238,12 @@
                         this.apiRequest();
                     }
                 })
+            },
+            submitSearch(formName){
+                console.log(this.numberValidateForm.searchgood);
+                this.searchParams.data=this.numberValidateForm.searchgood;
+                this.gapi = this.searchapi;
+                this.apiRequest();
             }
 
             
@@ -222,6 +263,9 @@
 
                     this.filterDataConfig = this.configRes['filterData'] || {};
 
+                    this.searchConfig = this.configRes['search']['show'] || false;
+
+                    this.searchapi = this.configRes['searchapi'] || null;
 
                     this.paginationConfig=this.configRes['pagination'] || null;
                     this.pageSize = this.paginationConfig['pageitems'];

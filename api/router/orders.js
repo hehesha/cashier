@@ -6,7 +6,7 @@ exports.createorders = function(req, res, connection) {
     var total = req.body.total;
     var data = req.body.data;
     console.log()
-    var sql = `insert into orders (operator,num,total) values ('${operator}','${num}','${total}');`
+    var sql = `insert into orders (operator,o_num,total) values ('${operator}','${num}','${total}');`
     console.log(sql);
 
     connection.query(sql

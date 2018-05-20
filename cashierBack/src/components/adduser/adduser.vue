@@ -1,26 +1,36 @@
 <template>
 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <el-form-item label="用户名" prop="user" >
-    <el-input v-model="ruleForm.user" autofocus=true id="pid"></el-input>
+    <el-input v-model="ruleForm.user" autofocus=true></el-input>
   </el-form-item>
-  <el-form-item label="密码" prop="psd">
+  <el-form-item label="初始密码" prop="psd">
     <el-input v-model="ruleForm.psd"></el-input>
   </el-form-item>
   <el-form-item label="姓名" prop="name">
     <el-input v-model="ruleForm.name"></el-input>
-  </el-form-item>
-    <el-form-item label="性别" prop="gender">
-    <el-input v-model="ruleForm.gender"></el-input>
+    </el-form-item>
+  <el-form-item label="性别" prop="gender">
+    <el-select v-model="ruleForm.gender">
+      <el-option label="男" value="男"></el-option>
+      <el-option label="女" value="女"></el-option>
+    </el-select>
   </el-form-item>
   <el-form-item label="电话" prop="phone">
     <el-input v-model="ruleForm.phone"></el-input>
   </el-form-item>
-  <el-form-item label="等级" prop="rank">
-    <el-input v-model="ruleForm.rank"></el-input>
+  <el-form-item label="员工等级" prop="rank">
+    <el-select v-model="ruleForm.rank" placeholder="请选择员工权限等级">
+      <el-option label="可查看" value="1"></el-option>
+      <el-option label="可编辑" value="2"></el-option>
+    </el-select>
   </el-form-item>
-  <el-form-item label="角色" prop="role">
-    <el-input v-model="ruleForm.role"></el-input>
-  </el-form-item>   
+    <el-form-item label="员工角色" prop="role">
+    <el-select v-model="ruleForm.role">
+      <el-option label="收银员" value="1"></el-option>
+      <el-option label="管理员" value="2"></el-option>
+      <el-option label="收银管理员" value="3"></el-option>
+    </el-select>
+  </el-form-item>  
   <el-form-item>
     <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
     <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -37,10 +47,10 @@
           psd: '',
           name: '',
           phone: '',
-          role:'',
-          rank: '',
+          role:'1',
+          rank: '1',
           size: '',
-          gender:''
+          gender:'男'
         },
         rules: {
           psd: [
@@ -49,22 +59,8 @@
           
           user: [
             { required: true, message: '请输入用户名', trigger: 'blur' ,autofocus:true}
-          ],
-          name: [
-            {  trigger: 'blur' }
-          ],
-          gender: [
-            {  trigger: 'blur' }
-          ],
-          phone: [
-            {trigger: 'blur' }
-          ],
-          rank: [
-            { trigger: 'blur' }
-          ],
-          role: [
-            {  trigger: 'blur' }
-          ],
+          ]
+       
         }
       };
     },
@@ -76,14 +72,19 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            http.post('addgoods',{proid:this.ruleForm.proid,num:this.ruleForm.num,name:this.ruleForm.name,price:this.ruleForm.price,unit:this.ruleForm.unit,size:this.ruleForm.size,desc:this.ruleForm.desc,prov:this.ruleForm.provide,sell:this.ruleForm.sellprice}).then((res)=>{
+
+            http.post('addcashier',{user:this.ruleForm.user,psd:this.ruleForm.psd,name:this.ruleForm.name,gender:this.ruleForm.gender,phone:this.ruleForm.phone,rank:this.ruleForm.rank,role:this.ruleForm.role}).then((res)=>{
                 console.log(res);
-                if(res.ok){
-                  alert('success!');
+                if(res.text=='success'){
+                  alert('添加成功！')
                   this.resetForm('ruleForm');
-                  pid.focus();
+                }else if(res.text=='exist'){
+                  alert('用户名已存在')
                 }
+                  
+                
             })
+                
             
             
           } else {
